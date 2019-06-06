@@ -1,12 +1,12 @@
+import * as THREE from 'three'
 import Sound from './Sound.js';
 import Audio from '../assets/kool.mp3';
-import './OBJLoader';
-import TweenMax from "gsap/TweenMax";
+import OBJLoader from './OBJLoader';
 import ObjetHeart from '../assets/model/Heart.obj';
 import {
-    TweenLite
+    TweenMax,
 } from 'gsap';
-const SimplexNoise = require('simplex-noise')
+import SimplexNoise from 'simplex-noise';
 
 import 'three/examples/js/postprocessing/EffectComposer';
 import 'three/examples/js/postprocessing/RenderPass';
@@ -23,7 +23,6 @@ let params = {
     bloomThreshold: 0,
     bloomRadius: 1
 };
-
 
 export default class App {
 
@@ -94,7 +93,7 @@ export default class App {
         this.scene.add(lightFront, lightBack, lightAmbiant);
 
         //Import and Create Object
-        var objLoader = new THREE.OBJLoader();
+        var objLoader = new OBJLoader();
         objLoader.load(ObjetHeart, object => {
             this.heart = object.children[0] //Variable objet Heart
             object.children[0].material = this.material //Variable HeartMaterial
@@ -152,20 +151,20 @@ export default class App {
 
             if (this.audio.frequencyDataArray[1] >= 220) {
 
-                TweenLite.to(params, 0.5, {
+                TweenMax.to(params, 0.5, {
                     bloomStrength: 3,
                     ease: Expo.easeOut
                 });
 
             } else {
-                TweenLite.to(params, 0.5, {
+                TweenMax.to(params, 0.5, {
                     bloomStrength: 0,
 
                     ease: Expo.easeOut
                 });
             }
 
-            TweenLite.from(this.heart.scale, 5, {
+            TweenMax.from(this.heart.scale, 5, {
                 z: 1 + (Math.abs(this.simplex.noise2D(this.audio.frequencyDataArray[1] / this.time, 10)) / 4),
                 x: 1 + (Math.abs(this.simplex.noise2D(this.audio.frequencyDataArray[1] / this.time, 10)) / 4),
                 y: 1 + (Math.abs(this.simplex.noise2D(this.audio.frequencyDataArray[1] / this.time, 10)) / 4),
