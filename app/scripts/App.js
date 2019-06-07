@@ -64,6 +64,7 @@ export default class App {
         });
         this.material.flatShading = true;
         this.heart = null
+        this.sound = null
 
         //Audio
         document.getElementById("start").addEventListener("click", () => {
