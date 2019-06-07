@@ -66,12 +66,15 @@ export default class App {
         this.heart = null
 
         //Audio
-        this.src = Audio
-        this.audio = new Sound(Audio, 103, .3, () => {
-            this.audio._load(Audio, () => {
-                this.audio.play()
-            })
-        }, false);
+        document.getElementById("start").addEventListener("click", () => {
+            this.src = Audio
+            this.audio = new Sound(Audio, 103, .3, () => {
+                this.audio._load(Audio, () => {
+                    this.audio.play()
+                })
+            }, false);
+        })
+
 
         this.container = document.querySelector('#three');
         document.body.appendChild(this.container);
