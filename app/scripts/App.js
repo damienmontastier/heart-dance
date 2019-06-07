@@ -67,11 +67,13 @@ export default class App {
         this.sound = null
 
         //Audio
-        document.getElementById("start").addEventListener("click", () => {
+        document.getElementById("start").addEventListener("click", (event) => {
             this.src = Audio
             this.audio = new Sound(Audio, 103, .3, () => {
                 this.audio._load(Audio, () => {
                     this.audio.play()
+                    this.renderer.animate(this.render.bind(this));
+                    event.srcElement.style.display = "none"
                 })
             }, false);
         })
@@ -139,10 +141,10 @@ export default class App {
         composer.addPass(renderScene);
         composer.addPass(bloomPass);
 
-        this.renderer.animate(this.render.bind(this));
     }
 
     render() {
+        console.log(this.audio)
         this.time = Date.now() / 100 - this.startTime
         this.sound = this.audio.frequencyDataArray[1] * Math.cos(Math.random() * 0.5)
 
