@@ -4,7 +4,7 @@ body {
     padding: 0;
 
     background: black;
-
+    overflow: hidden;
     font-family: sans-serif;
 }
 
@@ -14,13 +14,17 @@ button {
     background: transparent;
     color: white;
     position: absolute;
-    bottom: 20px;
+    top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     outline: none;
-    transition: all 1s cubic-bezier(0.39, 0.575, 0.565, 1);
-
 }
 
+#three{
+    transform: translateY(100%)
+}
+
+/* 
 button:hover {
     background: rgb(18, 18, 18);
-}
+} */

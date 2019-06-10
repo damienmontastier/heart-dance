@@ -5,6 +5,8 @@ import OBJLoader from './OBJLoader';
 import ObjetHeart from '../assets/model/Heart.obj';
 import {
     TweenMax,
+    Power4,
+    TimelineMax,
 } from 'gsap';
 import SimplexNoise from 'simplex-noise';
 
@@ -65,14 +67,24 @@ export default class App {
         this.material.flatShading = true;
         this.heart = null
         this.sound = null
-
+        let button = document.getElementById("start")
+        let three = document.getElementById("three")
         //Audio
-        document.getElementById("start").addEventListener("click", (event) => {
+        button.addEventListener("click", (event) => {
+            let tl = new TimelineMax
+            tl.to(button, 1, {
+                top: "-50%",
+                ease: Power4.easeInOut
+            })
+            tl.to(three, .8, {
+                // delay: .5,
+                y: "0%",
+                ease: Power4.easeIn
+            })
             this.src = Audio
             this.audio = new Sound(Audio, 103, .3, () => {
                 this.audio._load(Audio, () => {
                     this.audio.play()
-                    this.renderer.animate(this.render.bind(this));
                     event.srcElement.style.display = "none"
                 })
             }, false);
@@ -123,6 +135,7 @@ export default class App {
             antialias: true
         });
 
+        this.renderer.animate(this.render.bind(this));
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.container.appendChild(this.renderer.domElement);
@@ -144,12 +157,12 @@ export default class App {
     }
 
     render() {
-        console.log(this.audio)
         this.time = Date.now() / 100 - this.startTime
-        this.sound = this.audio.frequencyDataArray[1] * Math.cos(Math.random() * 0.5)
 
 
-        if (this.heart) {
+        if (this.heart && this.audio) {
+            this.sound = this.audio.frequencyDataArray[1] * Math.cos(Math.random() * 0.5)
+
             this.material.uniforms['time'].value = this.time
             this.material.uniforms['sound'].value = this.sound
 
